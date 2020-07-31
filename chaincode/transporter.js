@@ -16,3 +16,5 @@ class TransporterContract extends Contract {
     console.log("Transporter Smart Contract Instantiated");
   }
 }
+
+module.exports = TransporterContract;

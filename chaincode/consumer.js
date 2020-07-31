@@ -16,3 +16,5 @@ class ConsumerContract extends Contract {
     console.log("Consumer Smart Contract Instantiated");
   }
 }
+
+module.exports = ConsumerContract;

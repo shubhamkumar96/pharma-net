@@ -16,3 +16,5 @@ class DistributorContract extends Contract {
     console.log("Distributor Smart Contract Instantiated");
   }
 }
+
+module.exports = DistributorContract;

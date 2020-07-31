@@ -1,0 +1,3 @@
+application/node_modules/
+chaincode/node_modules/
+chaincode/package-lock.json

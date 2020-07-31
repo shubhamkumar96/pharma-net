@@ -16,3 +16,5 @@ class ManufacturerContract extends Contract {
     console.log("Manufacturer Smart Contract Instantiated");
   }
 }
+
+module.exports = ManufacturerContract;

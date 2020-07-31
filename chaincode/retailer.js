@@ -16,3 +16,5 @@ class RetailerContract extends Contract {
     console.log("Retailer Smart Contract Instantiated");
   }
 }
+
+module.exports = RetailerContract;
