@@ -123,12 +123,16 @@ function checkPrereqs() {
 # Generate the needed certificates, the genesis block and start the network.
 function networkUp() {
   checkPrereqs
-  # generate artifacts if they don't exist
+  # generate crypto-config contents if they don't exist
   if [ ! -d "crypto-config" ]; then
     generateCerts
     replacePrivateKey
+  fi
+  # generate artifacts if they don't exist
+  if [ ! -f "channel-artifacts/channel.tx" ]; then
     generateChannelArtifacts
   fi
+
   # Start the docker containers using compose file
   IMAGE_TAG=$IMAGETAG docker-compose -f "$COMPOSE_FILE" up -d 2>&1
   docker ps -a
@@ -182,7 +186,20 @@ function networkDown() {
     #Cleanup images
     removeUnwantedImages
     # remove orderer block and other channel configuration transactions and certs
-    rm -rf channel-artifacts/*.block channel-artifacts/*.tx crypto-config
+    #rm -rf channel-artifacts/*.block channel-artifacts/*.tx crypto-config
+    echo "##########################################################"
+    echo "##### Remove \"channel-artifacts\" contents if present ###"
+    echo "##########################################################"
+    if [ -d "channel-artifacts" ]; then
+      rm -rf channel-artifacts/*
+    fi
+    echo "##########################################################"
+    echo "##### Remove \"crypto-config\" folders if present ########"
+    echo "##########################################################"
+    if [ -d "crypto-config" ]; then
+      rm -rf crypto-config
+    fi
+    
   fi
 }
 
@@ -371,7 +388,7 @@ CLI_DELAY=5
 # channel name defaults to "pharmachannel"
 CHANNEL_NAME="pharmachannel"
 # version for updating chaincode
-VERSION_NO=1.1
+VERSION_NO=1.2
 # type of chaincode to be installed
 TYPE="basic"
 # use this as the default docker-compose yaml definition
