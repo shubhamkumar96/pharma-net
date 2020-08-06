@@ -85,8 +85,7 @@ class PharmaContract extends Contract {
       .getState(companyKey)
       .catch((err) => console.log(err));
 
-    let companyObject = JSON.parse(companyBuffer.toString());
-    if (companyObject !== null) {
+    if (companyBuffer.length > 0 ) {
       return "Company already Registered";
     }
 
