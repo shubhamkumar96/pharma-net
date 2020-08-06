@@ -29,6 +29,9 @@ class PharmaContract extends Contract {
       [companyCRN] // , companyName] //  Name of the company is not being used here as it will be difficult to retrieve the key in later functions.
     );
 
+    // OR we can also do this using "ctx.clientIdentity.getID()"
+    // const companyKey = ctx.clientIdentity.getID();
+
     // Return details of Company from blockchain
     let companyBuffer = await ctx.stub
       .getState(companyKey)
@@ -58,7 +61,7 @@ class PharmaContract extends Contract {
   ) {
     //    As this method is not valid for "Consumer".
     if (organisationRole === "Consumer") {
-      return null;
+      return "Not Allowed to Invoke this Function";
     }
 
     //  Assigning Hierarchy Key for different Organizations.
@@ -76,6 +79,16 @@ class PharmaContract extends Contract {
       "org.pharma-net.pharmanet.company",
       [companyCRN] // , companyName] //  Name of the company is not being used here as it will be difficult to retrieve the key in later functions.
     );
+
+    // To Validate if the Asset is already Present or not.
+    let companyBuffer = await ctx.stub
+      .getState(companyKey)
+      .catch((err) => console.log(err));
+
+    let companyObject = JSON.parse(companyBuffer.toString());
+    if (companyObject !== null) {
+      return "Company already Registered";
+    }
 
     // Create a Company object to be stored in blockchain
     let newCompanyObject = {
@@ -109,7 +122,7 @@ class PharmaContract extends Contract {
     //    As this method is only valid for "Manufacturer".
     let organisationRole = await getCompanyRole(ctx, companyCRN);
     if (organisationRole !== "Manufacturer") {
-      return null;
+      return "Not Allowed to Invoke this Function";
     }
 
     // Create a composite key for the new Drug
@@ -117,6 +130,16 @@ class PharmaContract extends Contract {
       "org.pharma-net.pharmanet.drug",
       [drugName, serialNo]
     );
+
+    // To Validate if the Asset is already Present or not.
+    let drugBuffer = await ctx.stub
+      .getState(drugKey)
+      .catch((err) => console.log(err));
+
+    let drugObject = JSON.parse(drugBuffer.toString());
+    if (drugObject !== null) {
+      return "Drug already Registered";
+    }
 
     // Create a Drug object to be stored in blockchain
     let newDrugObject = {
@@ -152,7 +175,7 @@ class PharmaContract extends Contract {
     let organisationRole = await getCompanyRole(ctx, companyCRN);
     if (organisationRole === "Distributor" || organisationRole === "Retailer") {
     } else {
-      return null;
+      return "Not Allowed to Invoke this Function";
     }
 
     // Create a composite key for the new PO
@@ -202,7 +225,7 @@ class PharmaContract extends Contract {
       organisationRole === "Distributor"
     ) {
     } else {
-      return null;
+      return "Not Allowed to Invoke this Function";
     }
 
     // Create a composite key for the new Shipment
@@ -247,7 +270,7 @@ class PharmaContract extends Contract {
     //    As this method is only valid for "Transporter".
     let organisationRole = await getCompanyRole(ctx, companyCRN);
     if (organisationRole !== "Transporter") {
-      return null;
+      return "Not Allowed to Invoke this Function";
     }
 
     // Create a composite key for the new Shipment
@@ -297,7 +320,7 @@ class PharmaContract extends Contract {
     //    As this method is only valid for "Retailer".
     let organisationRole = await getCompanyRole(ctx, companyCRN);
     if (organisationRole !== "Retailer") {
-      return null;
+      return "Not Allowed to Invoke this Function";
     }
 
     // Create a composite key for the Drug
