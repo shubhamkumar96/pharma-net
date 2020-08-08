@@ -61,6 +61,7 @@ class PharmaContract extends Contract {
   ) {
     //    As this method is not valid for "Consumer".
     if (organisationRole === "Consumer") {
+      console.log("Not Allowed to Invoke this Function");
       return "Not Allowed to Invoke this Function";
     }
 
@@ -84,6 +85,8 @@ class PharmaContract extends Contract {
     let companyBuffer = await ctx.stub
       .getState(companyKey)
       .catch((err) => console.log(err));
+
+    console.log(companyBuffer.length, organisationRole);
 
     if (companyBuffer.length > 0 ) {
       return "Company already Registered";
