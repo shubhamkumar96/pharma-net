@@ -63,7 +63,8 @@ function askProceed() {
 # Obtain CONTAINER_IDS and remove them
 # TODO Might want to make this optional - could clear other containers
 function clearContainers() {
-  CONTAINER_IDS=$(docker ps -a | awk '($2 ~ /dev-peer.*.mycc.*/) {print $1}')
+  #CONTAINER_IDS=$(docker ps -a | awk '($2 ~ /dev-peer.*.mycc.*/) {print $1}')
+  CONTAINER_IDS=$(docker ps -a | awk '($2 ~ /dev-peer*/) {print $1}')
   if [ -z "$CONTAINER_IDS" -o "$CONTAINER_IDS" == " " ]; then
     echo "---- No containers available for deletion ----"
   else
@@ -187,18 +188,18 @@ function networkDown() {
     removeUnwantedImages
     # remove orderer block and other channel configuration transactions and certs
     #rm -rf channel-artifacts/*.block channel-artifacts/*.tx crypto-config
-    echo "##########################################################"
-    echo "##### Remove \"channel-artifacts\" contents if present ###"
-    echo "##########################################################"
-    if [ -d "channel-artifacts" ]; then
-      rm -rf channel-artifacts/*
-    fi
-    echo "##########################################################"
-    echo "##### Remove \"crypto-config\" folders if present ########"
-    echo "##########################################################"
-    if [ -d "crypto-config" ]; then
-      rm -rf crypto-config
-    fi
+    #echo "##########################################################"
+    #echo "##### Remove \"channel-artifacts\" contents if present ###"
+    #echo "##########################################################"
+    #if [ -d "channel-artifacts" ]; then
+    #  rm -rf channel-artifacts/*
+    #fi
+    #echo "##########################################################"
+    #echo "##### Remove \"crypto-config\" folders if present ########"
+    #echo "##########################################################"
+    #if [ -d "crypto-config" ]; then
+    #  rm -rf crypto-config
+    #fi
     
   fi
 }

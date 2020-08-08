@@ -235,7 +235,9 @@ services:
       - peer1.transporter.pharma-net.com
     networks:
       - pharma
+      
   # We can remove the below chaincode service from 'docker-compose' file while running in "Production Mode", as it is not required.
+  # Comment this out in 'docker-compose.yml', 'docker-compose-template.yaml', 'docker-compose-e2e.yml'.
   # This chaincode container is to be used only in 'Dev Mode' by "peer0.manufacturer.pharma-net.com:7051".
   # In 'Dev Mode', we need a chaincode container for each endorser peer if we want to invoke chaincode functions from each endorser peer.
   # chaincode:
