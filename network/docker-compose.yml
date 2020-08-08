@@ -235,29 +235,31 @@ services:
       - peer1.transporter.pharma-net.com
     networks:
       - pharma
-
-  chaincode:
-    container_name: chaincode
-    image: hyperledger/fabric-ccenv:latest
-    tty: true
-    environment:
-      - GOPATH=/opt/gopath
-      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - FABRIC_LOGGING_SPEC=INFO
-      - CORE_PEER_ID=chaincode
-      - CORE_PEER_ADDRESS=peer0.manufacturer.pharma-net.com:7051
-      - CORE_PEER_LOCALMSPID=manufacturerMSP
-      - CORE_PEER_TLS_ENABLED=false
-      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/crypto/peerOrganizations/manufacturer.pharma-net.com/users/Admin@manufacturer.pharma-net.com/msp
-      - CORE_TLS_CLIENT_KEY_PATH=/opt/gopath/src/crypto/peerOrganizations/manufacturer.pharma-net.com/users/Admin@manufacturer.pharma-net.com/tls/server.key
-      - CORE_TLS_CLIENT_CERT_PATH=/opt/gopath/src/crypto/peerOrganizations/manufacturer.pharma-net.com/users/Admin@manufacturer.pharma-net.com/tls/server.crt
-      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/crypto/peerOrganizations/manufacturer.pharma-net.com/users/Admin@manufacturer.pharma-net.com/tls/ca.crt
-    working_dir: /opt/gopath/src/chaincode
-    command: /bin/bash -c 'sleep 6000000'
-    volumes:
-      - /var/run/:/host/var/run/
-      - ./../chaincode:/opt/gopath/src/chaincode
-      # - ./../chaincode-advanced:/opt/gopath/src/chaincode-advanced
-      - ./crypto-config:/opt/gopath/src/crypto
-    networks:
-      - pharma
+  # We can remove the below chaincode service from 'docker-compose' file while running in "Production Mode", as it is not required.
+  # This chaincode container is to be used only in 'Dev Mode' by "peer0.manufacturer.pharma-net.com:7051".
+  # In 'Dev Mode', we need a chaincode container for each endorser peer if we want to invoke chaincode functions from each endorser peer.
+  # chaincode:
+  #   container_name: chaincode
+  #   image: hyperledger/fabric-ccenv:latest
+  #   tty: true
+  #   environment:
+  #     - GOPATH=/opt/gopath
+  #     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+  #     - FABRIC_LOGGING_SPEC=INFO
+  #     - CORE_PEER_ID=chaincode
+  #     - CORE_PEER_ADDRESS=peer0.manufacturer.pharma-net.com:7051
+  #     - CORE_PEER_LOCALMSPID=manufacturerMSP
+  #     - CORE_PEER_TLS_ENABLED=false
+  #     - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/crypto/peerOrganizations/manufacturer.pharma-net.com/users/Admin@manufacturer.pharma-net.com/msp
+  #     - CORE_TLS_CLIENT_KEY_PATH=/opt/gopath/src/crypto/peerOrganizations/manufacturer.pharma-net.com/users/Admin@manufacturer.pharma-net.com/tls/server.key
+  #     - CORE_TLS_CLIENT_CERT_PATH=/opt/gopath/src/crypto/peerOrganizations/manufacturer.pharma-net.com/users/Admin@manufacturer.pharma-net.com/tls/server.crt
+  #     - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/crypto/peerOrganizations/manufacturer.pharma-net.com/users/Admin@manufacturer.pharma-net.com/tls/ca.crt
+  #   working_dir: /opt/gopath/src/chaincode
+  #   command: /bin/bash -c 'sleep 6000000'
+  #   volumes:
+  #     - /var/run/:/host/var/run/
+  #     - ./../chaincode:/opt/gopath/src/chaincode
+  #     # - ./../chaincode-advanced:/opt/gopath/src/chaincode-advanced
+  #     - ./crypto-config:/opt/gopath/src/crypto
+  #   networks:
+  #     - pharma
