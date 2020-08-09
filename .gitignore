@@ -1,5 +1,5 @@
-application/node_modules/
-chaincode/node_modules/
-chaincode/package-lock.json
-#network/channel-artifacts/
-#network/crypto-config/
+# application/node_modules/
+# chaincode/node_modules/
+# chaincode/package-lock.json
+# network/channel-artifacts/
+# network/crypto-config/
