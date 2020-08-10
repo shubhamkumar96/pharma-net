@@ -66,8 +66,6 @@ class PharmaContract extends Contract {
       .getState(companyKey)
       .catch((err) => console.log(err));
 
-    console.log(companyBuffer.length, organisationRole);
-
     if (companyBuffer.length > 0) {
       return "Company already Registered";
     }
@@ -114,13 +112,18 @@ class PharmaContract extends Contract {
       .getState(companyKey)
       .catch((err) => console.log(err));
 
+    if (companyBuffer.length === 0) {
+      console.log("Company Not Registered");
+      return "Company Not Registered";
+    }
+
     let companyObject = JSON.parse(companyBuffer.toString());
     let organisationRole = companyObject.organisationRole;
 
     if (organisationRole !== "Manufacturer") {
       return "Not Allowed to Invoke this Function";
     }
-
+    
     // Create a composite key for the new Drug
     const drugKey = ctx.stub.createCompositeKey(
       "org.pharma-net.pharmanet.drug",
@@ -132,8 +135,8 @@ class PharmaContract extends Contract {
       .getState(drugKey)
       .catch((err) => console.log(err));
 
-    let drugObject = JSON.parse(drugBuffer.toString());
-    if (drugObject !== null) {
+    if (drugBuffer.length > 0) {
+      console.log("Drug already Registered");
       return "Drug already Registered";
     }
 
@@ -179,6 +182,11 @@ class PharmaContract extends Contract {
     let companyBuffer = await ctx.stub
       .getState(companyKey)
       .catch((err) => console.log(err));
+
+    if (companyBuffer.length === 0) {
+      console.log("Company Not Registered");
+      return "Company Not Registered";
+    }
 
     let companyObject = JSON.parse(companyBuffer.toString());
     let organisationRole = companyObject.organisationRole;
@@ -240,6 +248,11 @@ class PharmaContract extends Contract {
     let companyBuffer = await ctx.stub
       .getState(companyKey)
       .catch((err) => console.log(err));
+
+    if (companyBuffer.length === 0) {
+      console.log("Company Not Registered");
+      return "Company Not Registered";
+    }
 
     let companyObject = JSON.parse(companyBuffer.toString());
     let organisationRole = companyObject.organisationRole;
@@ -304,6 +317,11 @@ class PharmaContract extends Contract {
       .getState(companyKey)
       .catch((err) => console.log(err));
 
+    if (companyBuffer.length === 0) {
+      console.log("Company Not Registered");
+      return "Company Not Registered";
+    }
+
     let companyObject = JSON.parse(companyBuffer.toString());
     let organisationRole = companyObject.organisationRole;
 
@@ -327,6 +345,11 @@ class PharmaContract extends Contract {
     let shipmentBuffer = await ctx.stub
       .getState(shipmentKey)
       .catch((err) => console.log(err));
+
+    if (shipmentBuffer.length === 0) {
+      console.log("Shipment Not Created");
+      return "Shipment Not Created";
+    }
 
     let shipmentObject = JSON.parse(shipmentBuffer.toString());
     shipmentObject.status = "delivered";
@@ -368,6 +391,11 @@ class PharmaContract extends Contract {
       .getState(companyKey)
       .catch((err) => console.log(err));
 
+    if (companyBuffer.length === 0) {
+      console.log("Company Not Registered");
+      return "Company Not Registered";
+    }
+
     let companyObject = JSON.parse(companyBuffer.toString());
     let organisationRole = companyObject.organisationRole;
 
@@ -385,6 +413,11 @@ class PharmaContract extends Contract {
     let drugBuffer = await ctx.stub
       .getState(drugKey)
       .catch((err) => console.log(err));
+
+    if (drugBuffer.length === 0) {
+      console.log("Drug Not Registered");
+      return "Drug Not Registered";
+    }
 
     let drugObject = JSON.parse(drugBuffer.toString());
     drugObject.owner = customerAadhar;
@@ -416,6 +449,11 @@ class PharmaContract extends Contract {
       .getState(drugKey)
       .catch((err) => console.log(err));
 
+    if (drugBuffer.length === 0) {
+      console.log("Drug Not Registered");
+      return "Drug Not Registered";
+    }
+
     let drugObject = JSON.parse(drugBuffer.toString());
 
     // Return value of updated Drug Object created to user
@@ -441,6 +479,11 @@ class PharmaContract extends Contract {
       .getState(drugKey)
       .catch((err) => console.log(err));
 
+    if (drugBuffer.length === 0) {
+      console.log("Drug Not Registered");
+      return "Drug Not Registered";
+    }
+      
     let drugObject = JSON.parse(drugBuffer.toString());
 
     // Return value of updated Drug Object created to user
