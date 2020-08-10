@@ -22,26 +22,6 @@ class PharmaContract extends Contract {
    * @param companyCRN - Company Registration Number of the Company
    * @returns
    */
-  async getCompanyRole(ctx, companyCRN) {
-    // Create a composite key for the company
-    const companyKey = ctx.stub.createCompositeKey(
-      "org.pharma-net.pharmanet.company",
-      [companyCRN] // , companyName] //  Name of the company is not being used here as it will be difficult to retrieve the key in later functions.
-    );
-
-    // OR we can also do this using "ctx.clientIdentity.getID()"
-    // const companyKey = ctx.clientIdentity.getID();
-
-    // Return details of Company from blockchain
-    let companyBuffer = await ctx.stub
-      .getState(companyKey)
-      .catch((err) => console.log(err));
-
-    let companyObject = JSON.parse(companyBuffer.toString());
-
-    // Return organisationRole of the company to user
-    return companyObject.organisationRole;
-  }
 
   /**
    * Create a Request for new Company on the network
@@ -122,7 +102,21 @@ class PharmaContract extends Contract {
    */
   async addDrug(ctx, drugName, serialNo, mfgDate, expDate, companyCRN) {
     //    As this method is only valid for "Manufacturer".
-    let organisationRole = await PharmaContract.getCompanyRole(ctx, companyCRN);
+    // Create a composite key for the company
+    const companyKey = ctx.stub.createCompositeKey(
+      "org.pharma-net.pharmanet.company",
+      [companyCRN] // , companyName] //  Name of the company is not being used here as it will be difficult to retrieve the key in later functions.
+    );
+    // OR we can also do this using "ctx.clientIdentity.getID()"
+    // const companyKey = ctx.clientIdentity.getID();
+    // Return details of Company from blockchain
+    let companyBuffer = await ctx.stub
+      .getState(companyKey)
+      .catch((err) => console.log(err));
+
+    let companyObject = JSON.parse(companyBuffer.toString());
+    let organisationRole = companyObject.organisationRole;
+
     if (organisationRole !== "Manufacturer") {
       return "Not Allowed to Invoke this Function";
     }
@@ -174,7 +168,21 @@ class PharmaContract extends Contract {
    */
   async createPO(ctx, buyerCRN, sellerCRN, drugName, quantity) {
     //    As this method is only valid for "Distributor" & "Retailer".
-    let organisationRole = await PharmaContract.getCompanyRole(ctx, companyCRN);
+    // Create a composite key for the company
+    const companyKey = ctx.stub.createCompositeKey(
+      "org.pharma-net.pharmanet.company",
+      [companyCRN] // , companyName] //  Name of the company is not being used here as it will be difficult to retrieve the key in later functions.
+    );
+    // OR we can also do this using "ctx.clientIdentity.getID()"
+    // const companyKey = ctx.clientIdentity.getID();
+    // Return details of Company from blockchain
+    let companyBuffer = await ctx.stub
+      .getState(companyKey)
+      .catch((err) => console.log(err));
+
+    let companyObject = JSON.parse(companyBuffer.toString());
+    let organisationRole = companyObject.organisationRole;
+
     if (organisationRole === "Distributor" || organisationRole === "Retailer") {
     } else {
       return "Not Allowed to Invoke this Function";
@@ -221,7 +229,21 @@ class PharmaContract extends Contract {
    */
   async createShipment(ctx, buyerCRN, drugName, listOfAssets, transporterCRN) {
     //    As this method is only valid for "Manufacturer" & "Distributor".
-    let organisationRole = await PharmaContract.getCompanyRole(ctx, companyCRN);
+    // Create a composite key for the company
+    const companyKey = ctx.stub.createCompositeKey(
+      "org.pharma-net.pharmanet.company",
+      [companyCRN] // , companyName] //  Name of the company is not being used here as it will be difficult to retrieve the key in later functions.
+    );
+    // OR we can also do this using "ctx.clientIdentity.getID()"
+    // const companyKey = ctx.clientIdentity.getID();
+    // Return details of Company from blockchain
+    let companyBuffer = await ctx.stub
+      .getState(companyKey)
+      .catch((err) => console.log(err));
+
+    let companyObject = JSON.parse(companyBuffer.toString());
+    let organisationRole = companyObject.organisationRole;
+
     if (
       organisationRole === "Manufacturer" ||
       organisationRole === "Distributor"
@@ -270,7 +292,21 @@ class PharmaContract extends Contract {
    */
   async updateShipment(ctx, buyerCRN, drugName, transporterCRN) {
     //    As this method is only valid for "Transporter".
-    let organisationRole = await PharmaContract.getCompanyRole(ctx, companyCRN);
+    // Create a composite key for the company
+    const companyKey = ctx.stub.createCompositeKey(
+      "org.pharma-net.pharmanet.company",
+      [companyCRN] // , companyName] //  Name of the company is not being used here as it will be difficult to retrieve the key in later functions.
+    );
+    // OR we can also do this using "ctx.clientIdentity.getID()"
+    // const companyKey = ctx.clientIdentity.getID();
+    // Return details of Company from blockchain
+    let companyBuffer = await ctx.stub
+      .getState(companyKey)
+      .catch((err) => console.log(err));
+
+    let companyObject = JSON.parse(companyBuffer.toString());
+    let organisationRole = companyObject.organisationRole;
+
     if (organisationRole !== "Transporter") {
       return "Not Allowed to Invoke this Function";
     }
@@ -320,7 +356,21 @@ class PharmaContract extends Contract {
    */
   async retailDrug(ctx, drugName, serialNo, retailerCRN, customerAadhar) {
     //    As this method is only valid for "Retailer".
-    let organisationRole = await PharmaContract.getCompanyRole(ctx, companyCRN);
+    // Create a composite key for the company
+    const companyKey = ctx.stub.createCompositeKey(
+      "org.pharma-net.pharmanet.company",
+      [companyCRN] // , companyName] //  Name of the company is not being used here as it will be difficult to retrieve the key in later functions.
+    );
+    // OR we can also do this using "ctx.clientIdentity.getID()"
+    // const companyKey = ctx.clientIdentity.getID();
+    // Return details of Company from blockchain
+    let companyBuffer = await ctx.stub
+      .getState(companyKey)
+      .catch((err) => console.log(err));
+
+    let companyObject = JSON.parse(companyBuffer.toString());
+    let organisationRole = companyObject.organisationRole;
+
     if (organisationRole !== "Retailer") {
       return "Not Allowed to Invoke this Function";
     }
