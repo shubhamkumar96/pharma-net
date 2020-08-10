@@ -88,7 +88,7 @@ class PharmaContract extends Contract {
 
     console.log(companyBuffer.length, organisationRole);
 
-    if (companyBuffer.length > 0 ) {
+    if (companyBuffer.length > 0) {
       return "Company already Registered";
     }
 
@@ -122,7 +122,7 @@ class PharmaContract extends Contract {
    */
   async addDrug(ctx, drugName, serialNo, mfgDate, expDate, companyCRN) {
     //    As this method is only valid for "Manufacturer".
-    let organisationRole = await getCompanyRole(ctx, companyCRN);
+    let organisationRole = await PharmaContract.getCompanyRole(ctx, companyCRN);
     if (organisationRole !== "Manufacturer") {
       return "Not Allowed to Invoke this Function";
     }
@@ -174,7 +174,7 @@ class PharmaContract extends Contract {
    */
   async createPO(ctx, buyerCRN, sellerCRN, drugName, quantity) {
     //    As this method is only valid for "Distributor" & "Retailer".
-    let organisationRole = await getCompanyRole(ctx, companyCRN);
+    let organisationRole = await PharmaContract.getCompanyRole(ctx, companyCRN);
     if (organisationRole === "Distributor" || organisationRole === "Retailer") {
     } else {
       return "Not Allowed to Invoke this Function";
@@ -221,7 +221,7 @@ class PharmaContract extends Contract {
    */
   async createShipment(ctx, buyerCRN, drugName, listOfAssets, transporterCRN) {
     //    As this method is only valid for "Manufacturer" & "Distributor".
-    let organisationRole = await getCompanyRole(ctx, companyCRN);
+    let organisationRole = await PharmaContract.getCompanyRole(ctx, companyCRN);
     if (
       organisationRole === "Manufacturer" ||
       organisationRole === "Distributor"
@@ -270,7 +270,7 @@ class PharmaContract extends Contract {
    */
   async updateShipment(ctx, buyerCRN, drugName, transporterCRN) {
     //    As this method is only valid for "Transporter".
-    let organisationRole = await getCompanyRole(ctx, companyCRN);
+    let organisationRole = await PharmaContract.getCompanyRole(ctx, companyCRN);
     if (organisationRole !== "Transporter") {
       return "Not Allowed to Invoke this Function";
     }
@@ -320,7 +320,7 @@ class PharmaContract extends Contract {
    */
   async retailDrug(ctx, drugName, serialNo, retailerCRN, customerAadhar) {
     //    As this method is only valid for "Retailer".
-    let organisationRole = await getCompanyRole(ctx, companyCRN);
+    let organisationRole = await PharmaContract.getCompanyRole(ctx, companyCRN);
     if (organisationRole !== "Retailer") {
       return "Not Allowed to Invoke this Function";
     }
